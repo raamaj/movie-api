@@ -1,0 +1,170 @@
+basePath: /
+definitions:
+  domain.ErrorMessage:
+    properties:
+      error:
+        type: boolean
+      message: {}
+      status_code:
+        type: integer
+    type: object
+  domain.MovieRequest:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      rating:
+        maximum: 10
+        minimum: 0
+        type: number
+      title:
+        type: string
+    required:
+    - description
+    - image
+    - title
+    type: object
+  domain.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      status_code:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: jayapermanarama@gmail.com
+    name: Rama Jayapermana
+  description: MOVIE APP is a web application for film management. This application
+    provides basic CRUD functionality.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Movie APP
+  version: "1.0"
+paths:
+  /Movies:
+    get:
+      description: Retrieve the results for each movie
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorMessage'
+      summary: Get movie results
+      tags:
+      - Movie
+    post:
+      consumes:
+      - application/json
+      description: Create Movie
+      parameters:
+      - description: Movie information
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.MovieRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorMessage'
+      summary: createMovie to the application
+      tags:
+      - Movie
+  /Movies/:id:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Movie
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorMessage'
+      summary: deleteMovie to the application
+      tags:
+      - Movie
+    get:
+      description: Retrieve the movie data
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorMessage'
+      summary: Get movie data
+      tags:
+      - Movie
+    patch:
+      consumes:
+      - application/json
+      description: Update Movie
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Movie information
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.MovieRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorMessage'
+      summary: updateMovie to the application
+      tags:
+      - Movie
+swagger: "2.0"
